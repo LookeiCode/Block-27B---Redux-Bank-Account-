@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import "./transactions.scss";
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, transfer } from 'react-redux'
 import { withdrawal } from './transactionsSlice';
 import { deposit } from './transactionsSlice';
 
@@ -20,6 +20,8 @@ export default function Transactions() {
 
   const [amountStr, setAmountStr] = useState("0.00");
 
+  const [name, setName] = useState ("");
+
 const dispatch = useDispatch();
 
   /** Dispatches a transaction action based on the form submission. */
@@ -36,13 +38,13 @@ const dispatch = useDispatch();
 
     switch (action) {
       case 'deposit':
-        dispatch(deposit({amount}));
+        dispatch(deposit({ amount }));
         break;
       case 'withdraw':
-        dispatch(withdrawal({amount}));
+        dispatch(withdrawal({ amount }));
         break;
       case 'transfer':
-
+        dispatch(transfer({ amount, name }));
         break;
     }
 
@@ -78,7 +80,8 @@ const dispatch = useDispatch();
         <div className="form-row">
           <label>
             Transfer to
-            <input type="text" placeholder="Recipient Name" name="recipient" />
+            <input value={name} onChange={(ev) => setName(ev.target.value)}
+            type="text" placeholder="Recipient Name" name="recipient" />
           </label>
           <button name="transfer">Transfer</button>
         </div>

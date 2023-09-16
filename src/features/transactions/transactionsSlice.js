@@ -46,6 +46,14 @@ const transactionsSlice = createSlice({
                 balance: state.balance,
             });
         },
+        transfer: (state, action) => {
+            state.balance -= action.payload.amount,
+            state.history.push({
+                type: "transfer",
+                amount: action.payload.amount,
+                balance: state.balance,
+            });
+        },
     },
 });
 
